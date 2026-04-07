@@ -1,68 +1,98 @@
-# Mixed-Precision Iterative Refinement with Stochastic Rounding
+# Stochastic Rounding in Mixed-Precision Iterative Refinement
 
-This repository contains the code, numerical experiments, and selected plots for my honors thesis on **mixed-precision iterative refinement (IR)** and **stochastic rounding (SR)** in ill-conditioned problems.
+This repository serves as the GitHub page for the numerical experiments developed for my honors thesis, **Stochastic Rounding in Mixed-Precision Iterative Refinement**. It contains the main Julia codes used in the experiments, supporting Matlab files, output logs and graphs, and related background readings used for the literature review.
 
-The project studies whether stochastic rounding in low-precision computations can help mitigate stagnation and maintain accuracy in mixed-precision iterative refinement algorithms. The experiments focus on inverse problems and image deblurring examples, including the **inverse heat problem** and the **PRblur image restoration problem**.
+The repository is organized mainly around the implementation and testing of mixed-precision iterative refinement algorithms, with stochastic rounding used in the low-precision computation step. The numerical experiments in this project focus primarily on the inverse heat problem and the PRblur image restoration problem.
+
+## Repository Structure
+
+At the top level, the repository contains the following folders:
+
+- **`Main/`**  
+  This is the main working directory of the project. Most of the numerical experiment codes are located here.
+
+- **`KroneckerProductTools_matlab/`**  
+  This folder contains the original Matlab codes for the Kronecker product tools and object definitions. These files serve as a reference for the Julia implementation.
+
+- **`Other_Julia_code/`**  
+  This folder contains additional Julia scripts that are mostly experimental, preliminary, or unrelated to the main numerical experiments reported in the thesis.
+
+- **`Related_papers/`**  
+  This folder contains papers and background readings related to the literature review and theoretical foundation of the thesis.
+
+## Main Folder Contents
+
+Most of the codes used for the thesis experiments are inside the `Main/` folder.
+
+### Subfolders
+
+- **`kronecker/`**  
+  This folder contains the Julia implementation of the Kronecker product object definition. It is translated and adapted from the Matlab Kronecker product tools.
+
+- **`logs_graphs/`**  
+  This folder contains output logs, recorded numerical values, and generated graphs, especially plots of relative error and convergence behavior.
+
+### Main Julia Files
+
+- **`refinement_funcs.jl`**  
+  Contains the iterative refinement algorithms and related functions. It also includes the predefined GMRES function used in the experiments.
+
+- **`other_funcs.jl`**  
+  Contains supporting helper functions used throughout the experiments to improve efficiency and organization.
+
+- **`heat_problem.jl`**  
+  Runs the numerical experiments for the inverse heat matrix problem.
+
+- **`kron_problem.jl`**  
+  Runs the numerical experiments for the PRblur problem, which uses Kronecker product structure.
+
+- **`blur_mat.jl`**  
+  Outputs the restored solution into `.mat` files so that the image results can be displayed in Matlab.
 
 ## Project Overview
 
-Mixed-precision algorithms use lower precision arithmetic to reduce computational cost while relying on higher precision steps to preserve accuracy. In this project, stochastic rounding is used in the low-precision computation step of iterative refinement and related solvers.
+This project studies the behavior of **mixed-precision iterative refinement (IR)** with **stochastic rounding (SR)**. The main goal is to examine whether stochastic rounding in low-precision arithmetic can help reduce stagnation and maintain stable convergence in ill-conditioned problems.
 
-Main topics explored in this repository include:
-- iterative refinement for linear systems,
-- LU-based and GMRES-based inner solves,
-- stochastic rounding versus round-to-nearest,
-- Tikhonov regularization for ill-posed problems,
-- behavior under different noise levels and precisions.
+The experiments compare different precisions and rounding modes, including standard round-to-nearest and stochastic rounding, under both regularized and unregularized settings.
 
-## Repository Contents
+The main problems considered are:
 
-Typical contents of this repository include:
+- **Inverse heat problem**  
+  A severely ill-conditioned inverse problem used to test convergence and regularization behavior.
 
-- `src/` — core Julia implementations of the algorithms  
-- `experiments/` — scripts for running numerical tests  
-- `plots/` — saved figures from experiments  
-- `data/` — problem data such as PRblur test data  
-- `results/` — output files, relative error histories, or summaries  
-- `README.md` — project description and usage instructions  
+- **PRblur image restoration problem**  
+  A large-scale deblurring problem with Kronecker product structure, tested in both noise-free and noisy settings to examine the implementation of SR in a more realistic problem.
 
-You may rename these folders to match the actual repository structure.
+## Methods Included
 
-## Numerical Problems
+This repository includes implementations related to:
 
-The main test problems in this repository are:
-
-### 1. Inverse Heat Problem
-A severely ill-conditioned inverse problem used to test the behavior of iterative refinement and regularization.
-
-### 2. PRblur Image Deblurring Problem
-A large-scale image restoration problem with Kronecker product structure, used to compare regularized and unregularized behavior under different precisions and noise levels.
-
-## Methods Implemented
-
-This repository includes code related to:
-- standard iterative refinement,
 - mixed-precision iterative refinement,
 - LU-based correction solves,
 - GMRES-based correction solves,
 - stochastic rounding in low precision,
-- Tikhonov regularization.
+- Tikhonov regularization,
+- relative error tracking and convergence plots.
 
-In the experiments, the residual is typically computed in higher precision, while the correction step is solved in lower precision.
+In the experiments, the residual and update are typically computed in higher precision, while the correction step is solved in lower precision.
 
-## Software and Packages
+## Outputs
 
-The code is written in **Julia**.
+The repository includes numerical outputs such as:
 
-Packages used in this project may include:
-- `LinearAlgebra`
-- `Plots`
-- `IterativeSolvers`
-- `StochasticRounding`
-- `MAT`
+- convergence histories,
+- relative error plots, 
+- experiment logs,
+- restored image outputs saved as `.mat` files. 
 
-Install dependencies in Julia with:
+In many plots, the first plotted point is **iteration 0**, which represents the relative error of the initial guess. Therefore, a graph may show one additional iteration beyond the number of iterations actually performed by the algorithm.
 
-```julia
-using Pkg
-Pkg.add(["LinearAlgebra", "Plots", "IterativeSolvers", "StochasticRounding", "MAT"])
+## Software
+
+The main codes are written in **Julia**, with some supporting and original reference codes in **Matlab**. The code was run on the CPU of an NVIDIA H100 system through a connection to Emory’s ADA server.
+
+The implementation of stochastic rounding in this project uses the Julia package **StochasticRounding.jl**, available at: [StochasticRounding.jl](https://github.com/milankl/StochasticRounding.jl).
+
+## Thesis Context
+
+This repository was developed as part of my honors thesis on stochastic rounding in mixed-precision iterative refinement. It is intended to document the computational experiments, supporting implementations, and outputs used in the thesis work.
