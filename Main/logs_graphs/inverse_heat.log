@@ -1,0 +1,33 @@
+GKS: cannot open display - headless operation mode active
+┌ Warning: Assignment to `start_time` in soft scope is ambiguous because a global variable by the same name exists: `start_time` will be treated as a new local. Disambiguate by using `local start_time` to suppress this warning or `global start_time` to assign to the existing global variable.
+└ @ /local/scratch/yguan44/AAA_heat.jl:49
+┌ Warning: Assignment to `elapsed` in soft scope is ambiguous because a global variable by the same name exists: `elapsed` will be treated as a new local. Disambiguate by using `local elapsed` to suppress this warning or `global elapsed` to assign to the existing global variable.
+└ @ /local/scratch/yguan44/AAA_heat.jl:51
+┌ Warning: Assignment to `start_time` in soft scope is ambiguous because a global variable by the same name exists: `start_time` will be treated as a new local. Disambiguate by using `local start_time` to suppress this warning or `global start_time` to assign to the existing global variable.
+└ @ /local/scratch/yguan44/AAA_heat.jl:78
+┌ Warning: Assignment to `elapsed` in soft scope is ambiguous because a global variable by the same name exists: `elapsed` will be treated as a new local. Disambiguate by using `local elapsed` to suppress this warning or `global elapsed` to assign to the existing global variable.
+└ @ /local/scratch/yguan44/AAA_heat.jl:80
+Original condition num: 1.240707014202683e18
+Regularize condition num: 396.2129990925759
+Original condition num: 1.240707014202683e18
+Regularize condition num: 396.2129990925759
+
+LU Factorization
+RTN LU Run time: 3.409759044647217
+Minimum relative error is 0.019958166434580576 at iteration 5
+Run 1 SR LU Run time: 1.1247379779815674
+Minimum relative error is 0.019960254595286955 at iteration 9
+Run 2 SR LU Run time: 0.3647279739379883
+Minimum relative error is 0.01996065928561194 at iteration 8
+Run 3 SR LU Run time: 0.3204491138458252
+Minimum relative error is 0.019962254805926585 at iteration 11
+
+GMRES
+RTN GMRES Run time: 3.781343936920166
+Minimum relative error is 0.024981640213179807 at iteration 11
+Run 1 SR GMRES Run time: 2.5089399814605713
+Minimum relative error is 0.019964271259331458 at iteration 11
+Run 2 SR GMRES Run time: 0.5578920841217041
+Minimum relative error is 0.0200515323858436 at iteration 11
+Run 3 SR GMRES Run time: 0.5817501544952393
+Minimum relative error is 0.020370862702443825 at iteration 11

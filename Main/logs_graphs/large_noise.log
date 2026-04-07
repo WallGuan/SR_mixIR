@@ -1,0 +1,77 @@
+GKS: cannot open display - headless operation mode active
+┌ Warning: Assignment to `start_time` in soft scope is ambiguous because a global variable by the same name exists: `start_time` will be treated as a new local. Disambiguate by using `local start_time` to suppress this warning or `global start_time` to assign to the existing global variable.
+└ @ /local/scratch/yguan44/AAA_kron.jl:125
+┌ Warning: Assignment to `elapsed` in soft scope is ambiguous because a global variable by the same name exists: `elapsed` will be treated as a new local. Disambiguate by using `local elapsed` to suppress this warning or `global elapsed` to assign to the existing global variable.
+└ @ /local/scratch/yguan44/AAA_kron.jl:127
+┌ Warning: Assignment to `start_time` in soft scope is ambiguous because a global variable by the same name exists: `start_time` will be treated as a new local. Disambiguate by using `local start_time` to suppress this warning or `global start_time` to assign to the existing global variable.
+└ @ /local/scratch/yguan44/AAA_kron.jl:162
+┌ Warning: Assignment to `elapsed` in soft scope is ambiguous because a global variable by the same name exists: `elapsed` will be treated as a new local. Disambiguate by using `local elapsed` to suppress this warning or `global elapsed` to assign to the existing global variable.
+└ @ /local/scratch/yguan44/AAA_kron.jl:164
+Single-precision RTN
+
+NO reg output for single precision
+
+Float64
+Run time for RTN_fl64: 4.553822040557861
+Minimum relative error is 3.006790369114787 at iteration 1
+
+Float32
+Run time for RTN_fl32: 7.332925081253052
+Minimum relative error is 3.0067904 at iteration 1
+
+Float16
+Run time for RTN_fl16: 8.114028930664062
+Minimum relative error is 0.413 at iteration 7
+
+REG output for single precision
+
+Float64
+Run time for reg_RTN_fl64: 7.908205032348633
+Minimum relative error is 0.2400883332835843 at iteration 5
+
+Float32
+Run time for reg_RTN_fl32: 10.193871021270752
+Minimum relative error is 0.24008833 at iteration 5
+
+Float16
+Run time for reg_RTN_fl16: 8.965047836303711
+Minimum relative error is 0.3691 at iteration 21
+
+Mix-precision NO reg
+
+RTN
+Run time for mix_RTN: 4.9619669914245605
+Minimum relative error is 0.4075127900593081 at iteration 7
+
+SR
+1
+Run 1 mix_SR_1 runtime: 88.13810300827026
+Minimum relative error is 3.006790369114787 at iteration 1
+
+2
+Run 2 mix_SR_2 runtime: 86.12831902503967
+Minimum relative error is 2.363997973114669 at iteration 9
+
+3
+Run 3 mix_SR_3 runtime: 85.15306997299194
+Minimum relative error is 0.6416215091433167 at iteration 2
+
+Mix-precision with reg
+
+RTNreg
+Run time for mix_RTN_reg: 9.165336847305298
+Minimum relative error is 0.3657344053582092 at iteration 21
+
+SRreg
+1
+Run 1 mix_SR_reg_1 runtime: 167.97544693946838
+Minimum relative error is 0.24005085221543743 at iteration 6
+
+2
+Run 2 mix_SR_reg_2 runtime: 167.52926111221313
+Minimum relative error is 0.24062091087428053 at iteration 6
+
+3
+Run 3 mix_SR_reg_3 runtime: 167.01877188682556
+Minimum relative error is 0.24006085623233112 at iteration 5
+

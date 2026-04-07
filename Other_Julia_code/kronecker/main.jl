@@ -1,7 +1,8 @@
 module KronMatrixModule
 
 import Base: adjoint, size, -, *, \
-export KronMatrix2, adjoint, full, size, svd, transpose, -, *, \
+import Base.Broadcast: broadcasted
+export KronMatrix2, adjoint, full, size, svd, lu, transpose, -, *, \
 
 # Include the parts of the module
 include("kron_matrix2.jl")
@@ -13,5 +14,7 @@ include("size.jl")
 include("svd.jl")
 include("transpose.jl")
 include("uminus.jl")
+include("lu.jl")
+include("precision.jl")
 
 end

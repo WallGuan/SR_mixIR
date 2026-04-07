@@ -1,6 +1,6 @@
 import Base: \
 
-function \(K::KronMatrix2, y::AbstractMatrix)
+function \(K::KronMatrix2, y)
     A = K.a[1]
     B = K.b[1]
 
