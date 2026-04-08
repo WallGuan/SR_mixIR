@@ -1,4 +1,12 @@
 # Stochastic Rounding in Mixed-Precision Iterative Refinement
+![Julia](https://img.shields.io/badge/Julia-9558B2?style=for-the-badge&logo=julia&logoColor=white)
+![MATLAB](https://img.shields.io/badge/MATLAB-E16737?style=for-the-badge)
+![Kronecker Product](https://img.shields.io/badge/Kronecker%20Product-0A66C2?style=for-the-badge)
+![Iterative Refinement](https://img.shields.io/badge/Iterative%20Refinement-1F6FEB?style=for-the-badge)
+![Stochastic Rounding](https://img.shields.io/badge/Stochastic%20Rounding-7A3E9D?style=for-the-badge)
+![Mixed Precision](https://img.shields.io/badge/Mixed%20Precision-0E7490?style=for-the-badge)
+![GMRES](https://img.shields.io/badge/GMRES-15803D?style=for-the-badge)
+![LU](https://img.shields.io/badge/LU-F59E0B?style=for-the-badge)
 
 This repository serves as the GitHub page for the numerical experiments developed for my honors thesis, **Stochastic Rounding in Mixed-Precision Iterative Refinement**. It contains the main Julia codes used in the experiments, supporting Matlab files, output logs and graphs, and related background readings used for the literature review.
 
@@ -32,6 +40,11 @@ Most of the codes used for the thesis experiments are inside the `Main/` folder.
 - **`logs_graphs/`**  
   This folder contains output logs, recorded numerical values, and generated graphs, especially plots of relative error and convergence behavior.
 
+### Dataset
+
+- **`PRblurData_new.mat`**  
+  This file contains the data for the PRblur problem, including the Kronecker factors, the right-hand side vector `b`, and the true solution `x_true`.
+  
 ### Main Julia Files
 
 - **`refinement_funcs.jl`**  
