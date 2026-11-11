@@ -11,6 +11,8 @@
 
 Code and results for my honors thesis at Emory University (Department of Mathematics, advisor Dr. James Nagy), awarded **Highest Honors in Mathematics**.
 
+📄 **[Read the full thesis (PDF)](YIFEI_GUAN_SRmixIR.pdf)**
+
 **Question:** low-precision arithmetic (Float16) is fast and memory-cheap, but on ill-conditioned problems iterative refinement often *stagnates*: rounding errors stop the solution from improving. Can **stochastic rounding** (rounding up or down at random, in proportion to distance) remove that stagnation and recover high-precision accuracy?
 
 **Answer, on a 65,536-unknown image-deblurring problem:** with Tikhonov regularization, Float16 stochastic rounding reached the same accuracy as full Float64 at every noise level tested. Round-to-nearest in the same mixed-precision setup stalled at an error 50–70% higher.
@@ -27,6 +29,10 @@ Code and results for my honors thesis at Emory University (Department of Mathema
 | 0.1% | 0.218 | 0.367 | 0.218 / 0.218 / 0.218 |
 | 1% | 0.218 | 0.372 | 0.218 / 0.218 / 0.218 |
 | 10% | 0.240 | 0.366 | 0.240 / 0.241 / 0.240 (within 4–5 steps) |
+
+<p align="center"><img src="assets/restoration.png" alt="Restored images: RTN vs SR, noise free and large noise" width="560"></p>
+
+*Restored images (thesis Figure 5.11). With stochastic rounding, the noise-free restoration recovers fine detail on the telescope body that round-to-nearest leaves blurred.*
 
 ![Large-noise mixed precision convergence](Main/logs_graphs/mix_error_large.png)
 
@@ -82,6 +88,8 @@ SR_mixIR/
 ├── KroneckerProductTools_matlab/  # original MATLAB KronMatrix2 class (reference for the port)
 ├── Other_Julia_code/              # early experiments and notebooks (not part of the final results)
 ├── assets/                        # README figures
+├── YIFEI_GUAN_SRmixIR.pdf         # the full honors thesis
+├── Project.toml                   # Julia environment (package list)
 └── setup.jl                       # installs the Julia dependencies
 ```
 
