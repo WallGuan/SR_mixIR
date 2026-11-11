@@ -1,3 +1,22 @@
+#=
+kron_problem.jl
+
+PRblur image-deblurring experiments. A = A1 ⊗ A2 is stored as a KronMatrix2,
+so the 65,536 × 65,536 blur matrix for a 256 × 256 image is never formed.
+
+Compares, with and without Tikhonov regularization:
+  1. uniform precision RTN in Float64 / Float32 / Float16 (baselines)
+  2. mixed-precision IR (Float16 / Float32 / Float64) with RTN
+  3. the same mixed-precision IR with stochastic rounding (3 runs, since SR is random)
+
+Choose the noise level by uncommenting one `bnoise` line below
+(all commented = noise free). Outputs: console log + single_error.png, mix_error.png.
+"Minimum relative error ... at iteration k" prints a 1-based index, so k - 1
+refinement steps were taken (index 1 = initial guess).
+
+Run from the Main/ folder:  julia kron_problem.jl
+=#
+
 include("kronecker/main.jl")
 include("refinement_funcs.jl")
 include("other_funcs.jl")
@@ -157,7 +176,7 @@ n_runs = 3
 x_sr_reg = Vector{AbstractArray}(undef, n_runs)
 error_sr_reg = Vector{Vector{Float64}}(undef, n_runs)
 
-for i in 1:3
+for i in 1:n_runs
     println(i)
     start_time = time()
     x_sr_reg[i], error_sr_reg[i] = IR_kronreg(A, btrue, x0; x_true=xtrue, SR = true, lambda = lam, imax = 20, GMRES_loop = 15)

@@ -1,3 +1,13 @@
+#=
+blur_mat.jl
+
+Runs the PRblur deblurring problem (noise-free, and large noise with Tikhonov
+regularization) with RTN and SR mixed-precision IR, then saves the restored
+images as .mat files so they can be displayed in MATLAB.
+
+Run from the Main/ folder:  julia blur_mat.jl
+=#
+
 include("kronecker/main.jl")
 include("refinement_funcs.jl")
 include("other_funcs.jl")
@@ -21,7 +31,8 @@ x0 = ones(size(xtrue))
 
 ### 
 
-btrue_large = bnoise(btrue, level=1e-1) # large noise 
+Random.seed!(2026) # fix the noise draw so runs are repeatable (SR itself stays random)
+btrue_large = bnoise(btrue, level=1e-1) # large noise: ||noise|| / ||b|| = 0.1
 
 ###
 
@@ -62,6 +73,8 @@ println("Run time for SR: ", elapsed)
 println("Minimum relative error is $(minimum(error)) at iteration $(argmin(error))")
 
 # save in .mat
+# Note: the key "x_true" holds the RESTORED solution (name kept for the MATLAB
+# display script); "b" is the blurred image that was actually solved for.
 matwrite("no_RTN.mat", Dict(
     "A1" => A1,
     "A2" => A2,
@@ -79,13 +92,13 @@ matwrite("no_SR.mat", Dict(
 matwrite("large_RTN.mat", Dict(
     "A1" => A1,
     "A2" => A2,
-    "b" => btrue,
+    "b" => btrue_large, # was btrue: save the noisy data this case actually used
     "x_true" => x_reg_rtn
 ))
 
 matwrite("large_SR.mat", Dict(
     "A1" => A1,
     "A2" => A2,
-    "b" => btrue,
+    "b" => btrue_large, # was btrue: save the noisy data this case actually used
     "x_true" => x_reg_sr
 ))

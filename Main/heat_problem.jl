@@ -1,3 +1,16 @@
+#=
+heat_problem.jl
+
+Inverse heat problem (n = 256, κ = 4). The original matrix has condition
+number about 1e18, so it is regularized with the Tikhonov augmented system
+(λ = 0.06, condition number about 400) before refinement.
+
+Compares RTN vs stochastic rounding (3 runs) for LU-based IR and GMRES-based IR.
+Output: console log + inverse_heat.png.
+
+Run from the Main/ folder:  julia heat_problem.jl
+=#
+
 # call on other files for pre-defined functions
 include("refinement_funcs.jl")
 include("other_funcs.jl")

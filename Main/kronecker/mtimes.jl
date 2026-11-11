@@ -24,7 +24,10 @@ function *(M, K::KronMatrix2)
     end
 end
 
-function left_mtimes(K::KronMatrix2, x::AbstractArray)
+# (A ⊗ B) * x without forming the Kronecker product: for each column x_j,
+# reshape it to an nb × na matrix X and use  (A ⊗ B) vec(X) = vec(B X Aᵀ).
+# Accepts a Number too (scales B), which `*` above already routes here.
+function left_mtimes(K::KronMatrix2, x::Union{AbstractArray, Number})
     A = K.a[1]
     B = K.b[1]
     if isa(x, Number)

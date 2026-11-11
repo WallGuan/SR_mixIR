@@ -1,3 +1,17 @@
+#=
+other_funcs.jl
+
+Helper functions for the experiments: test-matrix generators, the Tikhonov
+augmented system, noise, and plotting of error histories.
+=#
+
+"""
+    ill_A(m, n, cond)
+
+Random m×n test matrix with a prescribed condition number `cond`: random
+orthogonal U and V, and singular values spaced evenly on a log scale between
+σ_max and σ_max/cond.
+"""
 function ill_A(m, n, cond)
     U, _ = qr(randn(m, m))
     V, _ = qr(randn(n, n))
@@ -16,7 +30,14 @@ function ill_A(m, n, cond)
     return A
 end
 
-function error_analysis(error; logscale=true, saveplot=ture, savepath="error_plot.png")
+"""
+    error_analysis(error; logscale=true, saveplot=true, savepath="error_plot.png")
+
+Print the minimum relative error and where it occurs, and optionally save a
+convergence plot. Note `min_iter` is a 1-based index: index 1 is the initial
+guess (iteration 0).
+"""
+function error_analysis(error; logscale=true, saveplot=true, savepath="error_plot.png") # fixed typo: default was `ture`
     min_error = minimum(error)
     min_iter = argmin(error)
     println("Minimum relative error = $(min_error) at iteration $(min_iter)")
@@ -44,6 +65,14 @@ function error_analysis(error; logscale=true, saveplot=ture, savepath="error_plo
     return (min_error = min_error, min_iter = min_iter)
 end
 
+"""
+    AUG(A, b, x, lamda)
+
+Explicitly form the Tikhonov augmented system K = [I A; A' -λ²I] with
+right-hand side [b; 0] and reference solution [0; x]. Used for the small
+inverse heat problem; the large PRblur problem uses `AugMatVecMult` instead,
+so K is never formed.
+"""
 function AUG(A, b, x, lamda)
     m, n = size(A)
     K = [ I(m)   A; A'   -lamda^2 * I(n) ]
@@ -54,6 +83,13 @@ function AUG(A, b, x, lamda)
     return K, rhs, sol
 end
 
+"""
+    AugMatVecMult(A, alpha, v)
+
+Matrix-free product z = K*v with K = [I A; A' -α²I], where v = [v1; v2].
+Only products with A and A' are needed, so a `KronMatrix2` operator keeps
+its Kronecker structure. The result has the element type of `v`.
+"""
 function AugMatVecMult(A, alpha, v)
     T = eltype(v)
     alpha2 = T(alpha^2)
@@ -67,13 +103,31 @@ function AugMatVecMult(A, alpha, v)
     return z
 end
 
+"""
+    bnoise(b; level=1e-3)
+
+Add white Gaussian noise scaled so that norm(noise) / norm(b) = `level`
+(1e-3, 1e-2, 1e-1 = the small, medium and large noise cases).
+"""
 function bnoise(b; level=1e-3)
     r = randn(eltype(b), length(b))
     noise = (level * norm(b) / norm(r)) * r
     return b + noise
 end
 
-function heat(n::Int, kappa::Float64=1.0) 
+"""
+    heat(n, kappa=1.0)
+
+Inverse heat equation test problem (Volterra integral equation), following
+`heat` from Hansen's Regularization Tools. Returns (A, b, x_true) with A a
+lower-triangular Toeplitz matrix; κ controls how ill-conditioned it is.
+
+Note: here the quadrature points are `range(h/2, stop=1, length=n)`, whereas
+Regularization Tools uses `t = h/2 : h : 1` (spacing exactly h, ending at 1 - h/2).
+The two grids differ slightly, so A is close to, but not identical to, the
+MATLAB version. Kept as is so the thesis results stay reproducible.
+"""
+function heat(n::Int, kappa::Float64=1.0)
     h = 1 / n
     t = range(h/2, stop=1, length=n)
     c = h / (2 * kappa * sqrt(pi))
